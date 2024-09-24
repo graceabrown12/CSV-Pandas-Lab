@@ -1,0 +1,54 @@
+#Q1
+import pandas as pd
+df = pd.read_csv('acc_basketball_stats.csv')
+print(df.head())
+
+#Q2
+total_points = df['PTS'].sum()
+print(f"Total Points: {total_points}")
+max_minutes_player = df[df['MP'] == df['MP'].max()]
+print(max_minutes_player[['Player', 'MP']])
+top_5_rebounders = df.nlargest(5, 'TRB')[['Player', 'TRB']]
+print(top_5_rebounders)
+
+#Q3
+filtered_df = df[df['MP'] > 500]
+highest_ast_player = filtered_df[filtered_df['AST'] == filtered_df['AST'].max()]
+print(highest_ast_player[['Player', 'AST']])
+top_3_assists = df.nlargest(3, 'AST')[['Player', 'AST']]
+print(top_3_assists)
+top_3_blockers = df.nlargest(3, 'BLK')[['Player', 'BLK']]
+print(top_3_blockers)
+
+#Q4
+total_points_by_school = df.groupby('School')['PTS'].sum().reset_index()
+print(total_points_by_school)
+total_assists_by_school = df.groupby('School')['AST'].sum().reset_index()
+print(total_assists_by_school)
+top_3_schools = total_points_by_school.nlargest(3, 'PTS')
+print(top_3_schools)
+
+#Q5
+import matplotlib.pyplot as plt
+
+top_5_scorers = df.nlargest(5, 'PTS')[['Player', 'PTS']]
+plt.bar(top_5_scorers['Player'], top_5_scorers['PTS'])
+plt.xlabel('Player')
+plt.ylabel('Total Points')
+plt.title('Top 5 Players by Total Points')
+plt.show()
+
+correlation = df['FG%'].corr(df['WS'])
+print(f"Correlation between FG% and WS: {correlation}")
+
+plt.scatter(df['FG%'], df['WS'])
+plt.xlabel('Field Goal Percentage (FG%)')
+plt.ylabel('Win Shares (WS)')
+plt.title('Correlation between FG% and WS')
+plt.show()
+
+# In this assignment I learned that when working with CSV files and pandas DataFrames how to efficiently load and manipulate large datasets using pandas. In this homework assignment, I was able to work on  filtering, grouping, and aggregating data, which are essential skills for data analysis. This was really helpful for me to practice.
+
+# From this assignment, the most challenging aspect of this assignment was learning how to filter the data into specific conditions while keeping the analysis straightforward and easy to interpret. I used the pandas functions that were built in the break down and narrow relevant player statistics. This was challenging at first, but very satisfying to overcome. 
+
+# I think the insights gained from analyzing ACC basketball statistics could be applied to other real-world datasets. From this homework itself, data analysis can uncover performance insights. The same techniques can be applied in business, healthcare, or other industries to make data-driven decisions. If data analysis like such can allow for basketball predictions of future games, the same analysis can be performed to make decisions to predict just about anything. 
